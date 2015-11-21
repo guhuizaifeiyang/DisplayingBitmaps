@@ -170,6 +170,11 @@ public class ImageCache {
                             mReusableBitmaps.add(new SoftReference<Bitmap>(oldValue.getBitmap()));
                         }
                     }*/
+                    if (Utils.hasHoneycomb()) {
+                        // We're running on Honeycomb or later, so add the bitmap
+                        // to a SoftReference set for possible use with inBitmap later
+                        mReusableBitmaps.add(new SoftReference<Bitmap>(oldValue.getBitmap()));
+                    }
                 }
 
                 /**

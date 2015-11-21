@@ -40,7 +40,8 @@ import java.lang.ref.WeakReference;
  * thread and setting a placeholder image.
  */
 public abstract class ImageWorker {
-    private static final String TAG = "ImageWorker";
+    private static final boolean D = true;
+    private static final String TAG = "display";
     private static final int FADE_IN_TIME = 200;
 
     private ImageCache mImageCache;
@@ -206,7 +207,6 @@ public abstract class ImageWorker {
             if (bitmapData == null || !bitmapData.equals(data)) {
                 bitmapWorkerTask.cancel(true);
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "cancelPotentialWork - cancelled work for " + data);
                 }
             } else {
                 // The same work is already in progress.
@@ -281,6 +281,7 @@ public abstract class ImageWorker {
             // another thread and the ImageView that was originally bound to this task is still
             // bound back to this task and our "exit early" flag is not set, then call the main
             // process method (as implemented by a subclass)
+            if(D) Log.d(TAG,"ImageWorker - doInBackgroud - getBitmapFromDisCache = "+bitmap);
             if (bitmap == null && !isCancelled() && getAttachedImageView() != null
                     && !mExitTasksEarly) {
                 bitmap = processBitmap(mData);
